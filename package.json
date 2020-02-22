@@ -1,0 +1,11 @@
+{
+  "name": "firstangularprojectback",
+  "version": "1.0.0",
+  "description": "Back end of an angular project that dinamically creates forms.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Paolo Lodato",
+  "license": "ISC"
+}
