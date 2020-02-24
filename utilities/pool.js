@@ -7,7 +7,7 @@ module.exports = {
         host     : '127.0.0.1',
         user     : 'root',
         password : 'masterkey',
-        database : '' //need to add the name once specified
+        database : 'formsAndStuff'
       });
       return pool;
     }

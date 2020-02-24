@@ -18,7 +18,6 @@ app.use(session({
   cookie: { maxAge: 60 * 60 * 1000 }
 }));
 
-app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -29,11 +28,12 @@ app.use(function(req, res, next) {
 });
 
 //routers declarar
+var indexRouter = require('./routes/index');
 
 require('./utilities/passport');
 
 //routers use
-
+app.use('/', indexRouter);
 //cors
 
 app.listen(3000, function () {

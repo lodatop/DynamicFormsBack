@@ -1,39 +1,67 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var quizzes = require('./../utilities/quizzes');
+var answer = require('./../utilities/answer');
 
 const middleware = require('../middleware');
 
+router.get('/stats', function(req,res) {
+    //get todays activity
+})
+
 router.get('/menu', function(req,res) {
-    //traerse todos los menus
+    quizzes.getAllMenus().then((results) => {
+        res.send(results)
+    }).catch((err) => res.send(err))
 })
 
 router.post('/menu', function(req,res) {
-    //hacer un menu
+    quizzes.insertMenu(req.body.title,req.body.description).then((results) => {
+        res.send(results)
+    }).catch((err) => res.send(err))
 })
 
 router.get('/:menu/delete', function(req,res){
-    //borrar un menu
+    quizzes.deleteMenu(req.params.menu).then((results) => {
+        res.send(results)
+    }).catch((err) => res.send(err))
 })
 
-router.get('/:menu/form', function(req,res) {
-    //traerse los forms del menu
+router.get('/:menu/option', function(req,res) {
+    quizzes.getOptionsByMenu(req.params.menu).then((results) => {
+        res.send(results)
+    }).catch((err) => res.send(err))
 })
 
-router.post('/:menu/form', function(req,res) {
-    //hacer un form en el menu
+router.post('/:menu/option', function(req,res) {
+    quizzes.insertOption(req.body.title, req.params.menu, req.body.description, req.body.type, req.body.parent).then((results) => {
+        res.send(results)
+    }).catch((err) => res.send(err))
 })
 
-router.post('/:menu/:form/delete', function(req,res) {
-    //borrar un form
+router.get('/:menu/:option/delete', function(req,res) {
+    quizzes.deleteForm(req.params.option).then((results) => {
+        res.send(results)
+    }).catch((err) => res.send(err))
 })
 
-router.get('/:menu/:form/input', function(req,res) {
-    //traerse inputs de un form
+router.get('/:menu/:option/option', function(req,res) {
+    quizzes.getOptionsByParent(req.params.option).then((results) => {
+        res.send(results)
+    }).catch((err) => res.send(err))
 })
 
-router.post('/:menu/:form/input', function(req,res) {
-    //crear un input en un form
+router.get('/:menu/:option/form', function(req,res) {
+    quizzes.getInputsByOption(req.params.option).then((results) => {
+        res.send(results)
+    }).catch((err) => res.send(err))
+})
+
+router.post('/:menu/:option/form/input', function(req,res) {
+    quizzes.insertInput(req.params.option, req.body.label, req.body.type).then((results) => {
+        res.send(results)
+    }).catch((err) => res.send(err))
 })
 
 router.post('/:menu/:form/answer', function(req,res) {
