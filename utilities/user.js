@@ -1,6 +1,7 @@
 var db = require('./pool')
 var properties = require('./prop-reader')
 var bcrypt = require('bcrypt')
+var shortid = require('shortid');
 
 var pool = db.getPool();
 
@@ -33,8 +34,7 @@ module.exports.registerUser = (name, username, email, password) => {
                  if (rows.length) {
                     rej(err);
                 } else {
-    
-                    con.query(properties.get('addUser'), [name, username, email, bcrypt.hashSync(password, 10)], function(error,rows){
+                    con.query(properties.get('addUser'), [shortid.generate(),name, username, email, bcrypt.hashSync(password, 10)], function(error,rows){
                     if (error) throw error;
                     con.release();
                     res(rows);
@@ -57,7 +57,7 @@ module.exports.registerAdmin = (name, username, email, password) => {
                     rej(err);
                 } else {
     
-                    con.query(properties.get('addAdmin'), [name, username, email, bcrypt.hashSync(password, 10)], function(error,rows){
+                    con.query(properties.get('addAdmin'), [shortid.generate(), name, username, email, bcrypt.hashSync(password, 10)], function(error,rows){
                     if (error) throw error;
                     con.release();
                     res(rows);

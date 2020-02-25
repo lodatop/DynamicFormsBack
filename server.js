@@ -29,11 +29,14 @@ app.use(function(req, res, next) {
 
 //routers declarar
 var indexRouter = require('./routes/index');
+var userRouter = require('./routes/user');
 
 require('./utilities/passport');
 
 //routers use
 app.use('/', indexRouter);
+app.use('/user', userRouter);
+
 //cors
 
 app.listen(3000, function () {

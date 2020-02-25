@@ -4,16 +4,20 @@ var shortid = require('shortid');
 
 var pool = db.getPool();
 
-module.exports.insertAnswers = (queries) => {
+module.exports.insertAnswers = (queries, user_id) => {
    for(let i = 0; i<queries.length;i++){
        queries[i].query = properties.get('createAnswer')
+       queries[i].queryParams[2] = new Date().toLocaleString().slice(0,10)
+       queries[i].queryParams[3] = user_id
    }
-   executeTransaction(queries).then((results) => {
-       console.log(results)
-       return results
-    }).catch(error => {
-    console.log(error)
-  })
+   return new Promise ((resolve,reject) => {
+    executeTransaction(queries).then((results) => {
+          console.log(results)
+          resolve(results)
+      }).catch(error => {
+      reject(error)
+    })
+   })
 }
 
 function queryConnection(connection, query, queryParams) {

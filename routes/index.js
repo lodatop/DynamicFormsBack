@@ -10,6 +10,13 @@ router.get('/stats', function(req,res) {
     //get todays activity
 })
 
+router.get('/logout', function(req, res) {
+    req.session.destroy(function (err) {
+      res.send(req.user);
+    });
+  });
+  
+
 router.get('/menu', function(req,res) {
     quizzes.getAllMenus().then((results) => {
         res.send(results)
@@ -66,6 +73,10 @@ router.post('/:menu/:option/form/input', function(req,res) {
 
 router.post('/:menu/:form/answer', function(req,res) {
     //crear respuesta q seria una transaccion de queries
+    console.log(req.body)
+    answer.insertAnswers(req.body, /*req.user.user_id*/'Fy_SMZ40').then((results)=>{
+        res.send(results)
+    }).catch((err) => res.send(err))
 })
 
 module.exports = router;

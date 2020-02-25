@@ -8,7 +8,7 @@ var pool = db.getPool();
 
 passport.serializeUser(function(user, done) {
     
-    done(null, user.uuser_id);
+    done(null, user.user_id);
 });
 
 passport.deserializeUser(function(id, done) {
@@ -28,10 +28,8 @@ passport.use('local-signin', new LocalStrategy({
     passReqToCallback : true
 },
 function(req, username, password, done) {
-
     pool.getConnection(function(err, con){
         if(err) throw err;
-
         con.query(properties.get('selUserByUsername'),[username],function(err,rows){
             con.release();
             if (err)
@@ -39,8 +37,7 @@ function(req, username, password, done) {
             if (!rows.length) {
                 return done(null, false);
             } 
-            
-            if(bcrypt.compareSync(password, rows[0].uuser_ps))
+            if(bcrypt.compareSync(password, rows[0].user_ps))
                 return done(null, rows[0]);
             
 
