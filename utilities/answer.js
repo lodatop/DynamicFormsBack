@@ -5,7 +5,7 @@ var shortid = require('shortid');
 var pool = db.getPool();
 
 module.exports.insertAnswers = (queries, user_id) => {
-   for(let i = 0; i<queries.length;i++){
+   for(let i in queries){
        queries[i].query = properties.get('createAnswer')
        queries[i].queryParams[2] = new Date().toLocaleString().slice(0,10)
        queries[i].queryParams[3] = user_id
