@@ -8,7 +8,7 @@ var pool = db.getPool();
 
 passport.serializeUser(function(user, done) {
     
-    done(null, user.user_id);
+    done(null, user.id_user);
 });
 
 passport.deserializeUser(function(id, done) {
@@ -37,7 +37,7 @@ function(req, username, password, done) {
             if (!rows.length) {
                 return done(null, false);
             } 
-            if(bcrypt.compareSync(password, rows[0].user_ps))
+            if(bcrypt.compareSync(password, rows[0].password_user))
                 return done(null, rows[0]);
             
 

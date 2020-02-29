@@ -21,11 +21,13 @@ module.exports.insertAnswers = (queries, user_id) => {
 }
 
 function queryConnection(connection, query, queryParams) {
+  return new Promise((res,rej) => {
     connection.query(query, queryParams, function(error,rows){
         if (error)
             rej(error);
         res(rows)
     })
+  })
 }
 
 function executeTransaction(queries) {
