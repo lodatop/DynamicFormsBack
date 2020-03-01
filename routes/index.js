@@ -91,12 +91,11 @@ router.post('/:menu/:option/form/input', function(req,res) {
 })
 
 router.post('/:menu/:form/answer', function(req,res) {
-    //crear respuesta q seria una transaccion de queries
-    console.log(req.body)
-    
-    answer.insertAnswers(req.body, /*req.user.id_user*/'9SRlrFgx').then((results)=>{
+    answer.insertAnswers(req.body, req.user.id_user).then((results)=>{
         res.send(results)
-    }).catch((err) => res.send(err))
+    }).catch((err) => {
+        res.send(err)
+    })
 })
 
 module.exports = router;
