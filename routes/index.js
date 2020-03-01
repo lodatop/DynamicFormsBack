@@ -3,8 +3,27 @@ var router = express.Router();
 var passport = require('passport');
 var quizzes = require('./../utilities/quizzes');
 var answer = require('./../utilities/answer');
+var user = require('./../utilities/user');
 
 const middleware = require('../middleware');
+
+/*
+router.use('/', middleware.isLoggedIn, function(req, res, next) {
+    next();
+})
+*/
+
+router.get('/user', function(req,res) {
+    res.send(req.user)
+})
+
+router.post('/user', function(req,res) {
+    user.updateUser(req.body.username, req.body.name, req.body.email, req.user.id_user).then((results) => {
+        res.send(results)
+    }).catch((err) => {
+        res.send(err)
+    })
+})
 
 router.get('/stats', function(req,res) {
     //get todays activity
@@ -75,7 +94,7 @@ router.post('/:menu/:form/answer', function(req,res) {
     //crear respuesta q seria una transaccion de queries
     console.log(req.body)
     
-    answer.insertAnswers(req.body, /*req.user.user_id*/'Fy_SMZ40').then((results)=>{
+    answer.insertAnswers(req.body, /*req.user.id_user*/'9SRlrFgx').then((results)=>{
         res.send(results)
     }).catch((err) => res.send(err))
 })
