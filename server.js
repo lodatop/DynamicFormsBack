@@ -1,11 +1,12 @@
 require('dotenv').config()
 
-var express = require("express"),
+const express = require("express"),
     app = express(),
     passport = require('passport'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    cors = require('cors');
 
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}));
@@ -33,7 +34,12 @@ var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
 
 require('./utilities/passport');
-
+app.use(cors({
+  origin: true,
+  methods: 'POST, PUT, GET, DELETE, OPTIONS, PATCH',
+  allowedHeaders: 'Accept, Content-Type, Accept-Encoding, Content-Length, Authorization',
+  credentials: true
+}));
 //routers use
 app.use('/', indexRouter);
 app.use('/user', userRouter);
