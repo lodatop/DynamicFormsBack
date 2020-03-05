@@ -1,5 +1,5 @@
 var propReader = require('properties-reader');
 
-var properties = propReader('./utilities/queries.properties');
+var properties = propReader('./helpers/queries.properties');
 
 module.exports = properties;

@@ -30,10 +30,12 @@ app.use(function(req, res, next) {
   next();
 });
 
-var indexRouter = require('./routes/index');
-var userRouter = require('./routes/user');
+var indexRouter = require('./controllers/index');
+var userRouter = require('./controllers/user');
+var profileRouter = require('./controllers/profile');
 
-require('./utilities/passport');
+require('./helpers/passport');
+
 app.use(cors({
   origin: true,
   methods: 'POST, PUT, GET, DELETE, OPTIONS, PATCH',
@@ -43,6 +45,7 @@ app.use(cors({
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/profile', profileRouter);
 
 
 app.listen(3000, function () {

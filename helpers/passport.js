@@ -15,7 +15,7 @@ passport.deserializeUser(function(id, done) {
     pool.getConnection(function(err, con){
         if(err) throw err;
 
-        con.query(properties.get('selUser'), [id], function(error, rows){
+        con.query(properties.get('getUser'), [id], function(error, rows){
             
             done(error, rows[0]);
             con.release();
@@ -30,7 +30,7 @@ passport.use('local-signin', new LocalStrategy({
 function(req, username, password, done) {
     pool.getConnection(function(err, con){
         if(err) throw err;
-        con.query(properties.get('selUserByUsername'),[username],function(err,rows){
+        con.query(properties.get('getUserByUsername'),[username],function(err,rows){
             con.release();
             if (err)
                 return done(err);
