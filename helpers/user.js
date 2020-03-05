@@ -9,7 +9,7 @@ module.exports.getUserByUsername = (username) => {
     return new Promise ((res,rej) =>{
         pool.getConnection(function(err, con){
             if (err) throw err;
-            con.query(properties.get('selUserByUsername'), [username], function(err,rows){
+            con.query(properties.get('getUserByUsername'), [username], function(err,rows){
                 if (err)
                     rej(err);
                 if (rows.length) {
@@ -43,13 +43,13 @@ module.exports.registerUser = (name, username, email, password) => {
     return new Promise ((res,rej) =>{
         pool.getConnection(function(err, con){
             if(err) rej(err);
-            con.query(properties.get('selUserByUsername'), [username], function(err,rows){
+            con.query(properties.get('getUserByUsername'), [username], function(err,rows){
                 if (err)
                     rej(err);
                  if (rows.length) {
                     rej(err);
                 } else {
-                    con.query(properties.get('addUser'), [shortid.generate(),name, username, email, bcrypt.hashSync(password, 10)], function(error,rows){
+                    con.query(properties.get('insertUser'), [shortid.generate(),name, username, email, bcrypt.hashSync(password, 10)], function(error,rows){
                     if (error) throw error;
                     con.release();
                     res(rows);
@@ -65,14 +65,14 @@ module.exports.registerAdmin = (name, username, email, password) => {
     return new Promise ((res,rej) =>{
         pool.getConnection(function(err, con){
             if(err) rej(err);
-            con.query(properties.get('selUserByUsername'), [username], function(err,rows){
+            con.query(properties.get('getUserByUsername'), [username], function(err,rows){
                 if (err)
                     rej(err);
                  if (rows.length) {
                     rej(err);
                 } else {
     
-                    con.query(properties.get('addAdmin'), [shortid.generate(), name, username, email, bcrypt.hashSync(password, 10)], function(error,rows){
+                    con.query(properties.get('insertAdmin'), [shortid.generate(), name, username, email, bcrypt.hashSync(password, 10)], function(error,rows){
                     if (error) throw error;
                     con.release();
                     res(rows);
