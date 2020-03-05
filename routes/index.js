@@ -48,6 +48,12 @@ router.post('/menu', function(req,res) {
     }).catch((err) => res.send(err))
 })
 
+router.get('/:menu', function(req,res) {
+    quizzes.getMenu(req.params.menu).then((results) => {
+        res.send(results)
+    }).catch((err) => res.send(err))
+})
+
 router.get('/:menu/delete', function(req,res){
     quizzes.deleteMenu(req.params.menu).then((results) => {
         res.send(results)

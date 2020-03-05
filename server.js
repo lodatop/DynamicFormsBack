@@ -8,6 +8,7 @@ const express = require("express"),
     bodyParser = require('body-parser'),
     cors = require('cors');
 
+app.use(cors())
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -29,7 +30,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-//routers declarar
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
 
@@ -40,11 +40,10 @@ app.use(cors({
   allowedHeaders: 'Accept, Content-Type, Accept-Encoding, Content-Length, Authorization',
   credentials: true
 }));
-//routers use
+
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 
-//cors
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!')
