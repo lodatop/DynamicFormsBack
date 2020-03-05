@@ -5,7 +5,7 @@ var shortid = require('shortid');
 var pool = db.getPool();
 
 module.exports.insertUserForm = (formId, userId, data) => {
-  let date = new Date().toLocaleString().slice(0,10)
+  let date = new Date()
   return new Promise ((res,rej) =>{
     pool.getConnection(function(err, con){
         if (err) rej(err);
@@ -23,7 +23,7 @@ module.exports.getUserForm = (formId, userId) => {
   return new Promise ((res,rej) =>{
     pool.getConnection(function(err, con){
         if (err) rej(err);
-        con.query(properties.get('getUserForm'), [userId, formId], function(error,rows){
+        con.query(properties.get('getUserForm'), [formId, userId], function(error,rows){
             if (error)
                 rej(error);
             res(rows)

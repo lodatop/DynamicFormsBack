@@ -108,7 +108,7 @@ router.get('/:menu/:form/answer', function(req,res) {
 })
 
 router.post('/:menu/:form/answer', function(req,res) {
-    answer.insertUserForm(req.params.form, req.user.id_user, req.body.data).then((results)=>{
+    answer.insertUserForm(req.params.form, req.user.id_user,JSON.stringify(req.body.data)).then((results)=>{
         res.send(results)
     }).catch((err) => {
         res.send(err)

@@ -49,7 +49,7 @@ module.exports.registerUser = (name, username, email, password) => {
                  if (rows.length) {
                     rej(err);
                 } else {
-                    con.query(properties.get('insertUser'), [shortid.generate(),name, username, email, bcrypt.hashSync(password, 10)], function(error,rows){
+                    con.query(properties.get('insertUser'), [shortid.generate(),username, name, email, bcrypt.hashSync(password, 10)], function(error,rows){
                     if (error) throw error;
                     con.release();
                     res(rows);
@@ -72,7 +72,7 @@ module.exports.registerAdmin = (name, username, email, password) => {
                     rej(err);
                 } else {
     
-                    con.query(properties.get('insertAdmin'), [shortid.generate(), name, username, email, bcrypt.hashSync(password, 10)], function(error,rows){
+                    con.query(properties.get('insertAdmin'), [shortid.generate(), username, name, email, bcrypt.hashSync(password, 10)], function(error,rows){
                     if (error) throw error;
                     con.release();
                     res(rows);

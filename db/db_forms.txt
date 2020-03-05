@@ -38,7 +38,7 @@ CREATE TABLE user (
                 username_user VARCHAR(60) NOT NULL,
                 name_user VARCHAR(100) NOT NULL,
                 email_user VARCHAR(100) NOT NULL,
-                password_user VARCHAR(300) NOT NULL,
+                password_user VARCHAR(500) NOT NULL,
                 admin_user BOOLEAN NOT NULL,
                 PRIMARY KEY (id_user)
 );
