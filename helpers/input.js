@@ -18,6 +18,20 @@ module.exports.insertInput = (label, type) => {
     })
 }
 
+module.exports.getAllInputs = () => {
+    return new Promise ((res,rej) =>{
+        pool.getConnection(function(err, con){
+            if (err) throw err;
+            con.query(properties.get('getInputs'), function(err,rows){
+                if (err)
+                    rej(err);
+                res(rows)
+                con.release()
+            }
+        )})
+    })
+}
+
 module.exports.getInputByForm = (formId) => {
     return new Promise ((res,rej) =>{
         pool.getConnection(function(err, con){

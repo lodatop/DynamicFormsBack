@@ -37,6 +37,12 @@ router.get('/logout', function(req, res) {
     });
   });
   
+router.get('/input', function(req,res) {
+    input.getAllInputs().then((results) => {
+        res.send(results)
+    }).catch((err) => res.send(err))
+})
+
 router.post('/input', function(req,res) {
     input.insertInput(req.body.label, req.body.type).then((results) => {
         res.send(results)
@@ -53,6 +59,12 @@ router.post('/menu', function(req,res) {
     menu.insertMenu(req.body.title,req.body.description,req.body.parent).then((results) => {
         res.send(results)
     }).catch((err) => res.send(err))
+})
+
+router.get('/dashboard', function(req,res) {
+    menu.getMenusWithoutParent().then((results) => {
+       res.send(results)
+   }).catch((err) => res.send(err))
 })
 
 router.get('/:menu', async function(req,res) {
@@ -108,7 +120,7 @@ router.get('/:menu/:form/answer', function(req,res) {
 })
 
 router.post('/:menu/:form/answer', function(req,res) {
-    answer.insertUserForm(req.params.form, req.user.id_user,JSON.stringify(req.body.data)).then((results)=>{
+    answer.insertUserForm(req.params.form, req.user.id_user, JSON.stringify(req.body.data)).then((results)=>{
         res.send(results)
     }).catch((err) => {
         res.send(err)
@@ -123,8 +135,8 @@ router.post('/:menu/:form/answer/delete', function(req,res) {
     })
 })
 
-router.post('/:menu/:form/:input/delete', function(req,res) {
-    input.deleteFormInput(req.body.input, req.params.form).then((results) => {
+router.post('/:menu/:form/input/delete', function(req,res) {
+    input.deleteFormInput(req.params.form, req.body.input).then((results) => {
         res.send(results)
     }).catch((err) => res.send(err))
 })

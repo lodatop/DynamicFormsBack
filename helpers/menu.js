@@ -26,7 +26,21 @@ module.exports.getAllMenus = () => {
     return new Promise ((res,rej) =>{
         pool.getConnection(function(err, con){
             if (err) rej(err);
-            con.query(properties.get('getMenus'), function(error,rows){
+            con.query(properties.get('getAllMenus'), function(error,rows){
+                if (error)
+                    rej(error);
+                res(rows)
+                con.release()
+            }
+        )})
+    })
+}
+
+module.exports.getMenusWithoutParent = () => {
+    return new Promise ((res,rej) =>{
+        pool.getConnection(function(err, con){
+            if (err) rej(err);
+            con.query(properties.get('getMenusWithoutParent'), function(error,rows){
                 if (error)
                     rej(error);
                 res(rows)
