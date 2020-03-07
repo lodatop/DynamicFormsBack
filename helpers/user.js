@@ -23,11 +23,11 @@ module.exports.getUserByUsername = (username) => {
     
 }
 
-module.exports.updateUser = (username, name, email, id) => {
+module.exports.updateUser = (username, name, email, age, gender, id) => {
     return new Promise ((res,rej) =>{
         pool.getConnection(function(err, con){
             if (err) throw err;
-            con.query(properties.get('updateUser'), [username, username, name, name, email, email, id], function(err,rows){
+            con.query(properties.get('updateUser'), [username, username, name, name, email, email, age, age, gender, gender, id], function(err,rows){
                 if (err)
                     rej(err);
                 res(rows);
@@ -39,7 +39,7 @@ module.exports.updateUser = (username, name, email, id) => {
 }
 
 
-module.exports.registerUser = (name, username, email, password) => {
+module.exports.registerUser = (name, username, email, password, age, gender) => {
     return new Promise ((res,rej) =>{
         pool.getConnection(function(err, con){
             if(err) rej(err);
@@ -49,7 +49,7 @@ module.exports.registerUser = (name, username, email, password) => {
                  if (rows.length) {
                     rej(err);
                 } else {
-                    con.query(properties.get('insertUser'), [shortid.generate(),username, name, email, bcrypt.hashSync(password, 10)], function(error,rows){
+                    con.query(properties.get('insertUser'), [shortid.generate(),username, name, email, bcrypt.hashSync(password, 10), age, gender], function(error,rows){
                     if (error) throw error;
                     con.release();
                     res(rows);
@@ -61,7 +61,7 @@ module.exports.registerUser = (name, username, email, password) => {
     })
 }
 
-module.exports.registerAdmin = (name, username, email, password) => {
+module.exports.registerAdmin = (name, username, email, password, age, gender) => {
     return new Promise ((res,rej) =>{
         pool.getConnection(function(err, con){
             if(err) rej(err);
@@ -72,7 +72,7 @@ module.exports.registerAdmin = (name, username, email, password) => {
                     rej(err);
                 } else {
     
-                    con.query(properties.get('insertAdmin'), [shortid.generate(), username, name, email, bcrypt.hashSync(password, 10)], function(error,rows){
+                    con.query(properties.get('insertAdmin'), [shortid.generate(), username, name, email, bcrypt.hashSync(password, 10), age, gender], function(error,rows){
                     if (error) throw error;
                     con.release();
                     res(rows);
@@ -83,3 +83,17 @@ module.exports.registerAdmin = (name, username, email, password) => {
         })
     })
 }
+
+module.exports.changePictureUrl = (userId, pictureUrl) => {
+    return new Promise ((res,rej) =>{
+        pool.getConnection(function(err, con){
+            if (err) throw err;
+            con.query(properties.get('updateAvatar'), [pictureUrl, userId], function(err,rows){
+                if (err)
+                    rej(err);
+                res(rows);
+                con.release();
+            }
+        )})
+    })
+  }

@@ -9,22 +9,8 @@ var user = require('../helpers/user');
 
 const middleware = require('../middlewares/auth');
 
-/*
-router.use('/', middleware.isLoggedIn, function(req, res, next) {
-    next();
-})
-*/
-
 router.get('/user', function(req,res) {
     res.send(req.user)
-})
-
-router.post('/user', function(req,res) {
-    user.updateUser(req.body.username, req.body.name, req.body.email, req.user.id_user).then((results) => {
-        res.send(results)
-    }).catch((err) => {
-        res.send(err)
-    })
 })
 
 router.get('/stats', function(req,res) {
@@ -43,7 +29,7 @@ router.get('/input', function(req,res) {
     }).catch((err) => res.send(err))
 })
 
-router.post('/input', function(req,res) {
+router.post('/input', middleware.isAdmin, function(req,res) {
     input.insertInput(req.body.label, req.body.type).then((results) => {
         res.send(results)
     }).catch((err) => res.send(err))
@@ -55,7 +41,7 @@ router.get('/menu', function(req,res) {
     }).catch((err) => res.send(err))
 })
 
-router.post('/menu', function(req,res) {
+router.post('/menu', middleware.isAdmin, function(req,res) {
     menu.insertMenu(req.body.title,req.body.description,req.body.parent).then((results) => {
         res.send(results)
     }).catch((err) => res.send(err))
@@ -74,20 +60,20 @@ router.get('/:menu', async function(req,res) {
     res.send({menus: menus, forms: forms})
 })
 
-router.post('/:menu/menu', async function(req,res) {
+router.post('/:menu/menu', middleware.isAdmin, async function(req,res) {
     menu.insertMenu(req.body.title,req.body.description,req.params.menu).then((results) => {
         res.send(results)
     }).catch((err) => res.send(err))
 })
 
 
-router.get('/:menu/delete', function(req,res){
+router.get('/:menu/delete', middleware.isAdmin, function(req,res){
     menu.deleteMenu(req.params.menu).then((results) => {
         res.send(results)
     }).catch((err) => res.send(err))
 })
 
-router.post('/:menu/form', function(req,res) {
+router.post('/:menu/form', middleware.isAdmin, function(req,res) {
     form.insertForm(req.body.title, req.params.menu, req.body.description).then((results) => {
         res.send(results)
     }).catch((err) => res.send(err))
@@ -105,7 +91,7 @@ router.get('/:menu/:form/delete', function(req,res) {
     }).catch((err) => res.send(err))
 })
 
-router.post('/:menu/:form/input', function(req,res) {
+router.post('/:menu/:form/input', middleware.isAdmin, function(req,res) {
     input.insertFormInput(req.body.input, req.params.form).then((results) => {
         res.send(results)
     }).catch((err) => res.send(err))
@@ -119,7 +105,7 @@ router.get('/:menu/:form/answer', function(req,res) {
     })
 })
 
-router.post('/:menu/:form/answer', function(req,res) {
+router.post('/:menu/:form/answer', middleware.isLoggedIn, function(req,res) {
     answer.insertUserForm(req.params.form, req.user.id_user, JSON.stringify(req.body.data)).then((results)=>{
         res.send(results)
     }).catch((err) => {

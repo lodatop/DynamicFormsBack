@@ -12,7 +12,7 @@ router.use('/', middleware.isNotLoggedIn, function(req, res, next) {
 
 
 router.post('/register', function(req, res, next) {
-  var us = user.registerUser(req.body.name, req.body.username, req.body.email, req.body.password).then((rows) => {
+  var us = user.registerUser(req.body.name, req.body.username, req.body.email, req.body.password, req.body.age, req.body.gender).then((rows) => {
     if (rows) {
       res.send(rows)
     }
@@ -20,16 +20,14 @@ router.post('/register', function(req, res, next) {
 });
 
 router.post('/registerAdmin', function(req, res, next) {
-    var us = user.registerAdmin(req.body.name, req.body.username, req.body.email, req.body.password).then((rows) => {
+    var us = user.registerAdmin(req.body.name, req.body.username, req.body.email, req.body.password, req.body.age, req.body.gender).then((rows) => {
       if (rows) {
         res.send(rows)
       }
     }).catch((err) => console.log(err))
   });
 
-router.post('/login', passport.authenticate('local-signin', {
-  failureFlash: true,
-}), function(req, res, next) {
+router.post('/login', passport.authenticate('local-signin'), function(req, res, next) {
     res.send(req.user)
 });
 
