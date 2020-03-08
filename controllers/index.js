@@ -57,7 +57,7 @@ router.get('/:menu', async function(req,res) {
     var menus = await menu.getMenusByParent(req.params.menu)
     var forms = await form.getFormByMenu(req.params.menu)
 
-    res.send({menus: menus, forms: forms})
+    res.send({ data: {menus: menus, forms: forms}})
 })
 
 router.post('/:menu/menu', middleware.isAdmin, async function(req,res) {

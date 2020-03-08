@@ -14,7 +14,10 @@ router.use('/', middleware.isNotLoggedIn, function(req, res, next) {
 router.post('/register', function(req, res, next) {
   var us = user.registerUser(req.body.name, req.body.username, req.body.email, req.body.password, req.body.age, req.body.gender).then((rows) => {
     if (rows) {
-      res.send(rows)
+      res.send({
+        status: 200,
+        message: "registered succesfully as user",
+        user: rows})
     }
   }).catch((err) => console.log(err))
 });
@@ -22,13 +25,21 @@ router.post('/register', function(req, res, next) {
 router.post('/registerAdmin', function(req, res, next) {
     var us = user.registerAdmin(req.body.name, req.body.username, req.body.email, req.body.password, req.body.age, req.body.gender).then((rows) => {
       if (rows) {
-        res.send(rows)
+        res.send({
+          status: 200,
+          message: "registered succesfully as admin",
+          user: rows})
       }
     }).catch((err) => console.log(err))
   });
 
 router.post('/login', passport.authenticate('local-signin'), function(req, res, next) {
-    res.send(req.user)
+  if(typeof req.user !== undefined){
+    res.send({
+      status: 200,
+      message: "login succesfully",
+      user: req.user})
+  }  
 });
 
 module.exports = router;
