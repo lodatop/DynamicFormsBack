@@ -33,6 +33,9 @@ app.use(function(req, res, next) {
 var indexRouter = require('./controllers/index');
 var userRouter = require('./controllers/user');
 var profileRouter = require('./controllers/profile');
+var menuRouter = require('./controllers/menu');
+var formRouter = require('./controllers/form');
+var inputRouter = require('./controllers/input');
 
 require('./helpers/passport');
 
@@ -44,8 +47,11 @@ app.use(cors({
 }));
 
 app.use('/', indexRouter);
+app.use('/', inputRouter);
 app.use('/user', userRouter);
 app.use('/profile', profileRouter);
+app.use('/menu', menuRouter);
+app.use('/form', formRouter);
 
 
 app.listen(3000, function () {
