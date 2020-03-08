@@ -35,7 +35,9 @@ router.get('/:form/answer', function(req,res) {
 
 router.post('/:form/answer', middleware.isLoggedIn, function(req,res) {
     answer.insertUserForm(req.params.form, req.user.id_user, JSON.stringify(req.body.data)).then((results)=>{
-        res.send(results)
+        form.updateForm(req.params.form).then((updated) => {
+            res.send(results)
+        }).catch((error) => res.send(error))
     }).catch((err) => {
         res.send(err)
     })
