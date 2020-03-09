@@ -2,15 +2,17 @@ module.exports = {
     isLoggedIn: (req, res, next) => {
       if (req.isAuthenticated()) {
         return next();
+      } else {
+        res.send({
+          status: 400,
+          message: 'not authenticated'
+        });
       }
-      //req.session.oldUrl = req.url;
-      //res.redirect('/user/login');
     },
     isNotLoggedIn: (req, res, next) => {
       if (!req.isAuthenticated()) {
         return next();
       }
-      //res.redirect('/');
     },
     isAdmin: (req, res, next) => {
       if (req.isAuthenticated()) {

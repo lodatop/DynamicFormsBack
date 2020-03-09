@@ -43,7 +43,7 @@ router.post('/:form/answer', middleware.isLoggedIn, function(req,res) {
     })
 })
 
-router.post('/:form/answer/delete', function(req,res) {
+router.get('/:form/answer/delete', function(req,res) {
     answer.deleteUserForm(req.params.form, req.user.id_user).then((results)=>{
         res.send(results)
     }).catch((err) => {

@@ -38,7 +38,7 @@ router.post('/login', passport.authenticate('local-signin'), function(req, res, 
     res.send({
       status: 200,
       message: "login succesfully",
-      user: req.user})
+      data: req.user})
   }  
 });
 
