@@ -20,8 +20,8 @@ CREATE TABLE form (
                 id_form VARCHAR(50) NOT NULL,
                 title_form VARCHAR(150) NOT NULL,
                 description_form VARCHAR(150) NOT NULL,
-                completed_form INT NOT NULL,
                 id_menu VARCHAR(50) NOT NULL,
+                completed_form INT NOT NULL,
                 PRIMARY KEY (id_form)
 );
 

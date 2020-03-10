@@ -11,7 +11,7 @@ module.exports.insertForm = (title, menuId, description) => {
             con.query(properties.get('insertForm'), [shortid.generate(), title, description, menuId], function(error,rows){
                 if (error)
                     rej(error);
-                res(rows)
+                res(rows.insertId)
                 con.release()
             }
         )})

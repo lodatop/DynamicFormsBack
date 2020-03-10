@@ -57,7 +57,7 @@ module.exports.getMenu = (id) => {
             con.query(properties.get('getMenu'), [id], function(err,rows){
                 if (err)
                     rej(err);
-                res(rows)
+                res(rows[0])
                 con.release()
             }
         )})
