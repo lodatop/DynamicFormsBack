@@ -18,11 +18,25 @@ module.exports.insertForm = (title, menuId, description) => {
     })
 }
 
-module.exports.getForm = (idd) => {
+module.exports.getForm = (id) => {
     return new Promise ((res,rej) =>{
         pool.getConnection(function(err, con){
             if (err) throw err;
             con.query(properties.get('getForm'), [id], function(err,rows){
+                if (err)
+                    rej(err);
+                res(rows)
+                con.release()
+            }
+        )})
+    })
+}
+
+module.exports.getAllForms = () => {
+    return new Promise ((res,rej) =>{
+        pool.getConnection(function(err, con){
+            if (err) throw err;
+            con.query(properties.get('getAllForms'), function(err,rows){
                 if (err)
                     rej(err);
                 res(rows)

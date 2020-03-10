@@ -6,6 +6,11 @@ var answer = require('../helpers/answer');
 
 const middleware = require('../middlewares/auth');
 
+router.get('/', middleware.isLoggedIn, function(req,res) {
+    form.getAllForms().then((results) => {
+        res.send(results)
+    }).catch((err) => res.send(err))
+})
 
 router.get('/:form', middleware.isLoggedIn, function(req,res) {
     input.getInputByForm(req.params.form).then((results) => {
