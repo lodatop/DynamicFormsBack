@@ -8,10 +8,11 @@ module.exports.insertForm = (title, menuId, description) => {
     return new Promise ((res,rej) =>{
         pool.getConnection(function(err, con){
             if (err) rej(err);
-            con.query(properties.get('insertForm'), [shortid.generate(), title, description, menuId], function(error,rows){
+            let formId = shortid.generate();
+            con.query(properties.get('insertForm'), [formId, title, description, menuId], function(error,rows){
                 if (error)
                     rej(error);
-                res(rows.insertId)
+                res(formId)
                 con.release()
             }
         )})
