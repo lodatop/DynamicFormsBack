@@ -10,7 +10,7 @@ var user = require('../helpers/user');
 const middleware = require('../middlewares/auth');
 
 router.get('/user', function(req,res) {
-    res.send(req.user)
+    res.send({ data: req.user})
 })
 
 router.get('/stats', function(req,res) {
