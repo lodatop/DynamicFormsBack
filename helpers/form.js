@@ -26,7 +26,7 @@ module.exports.getForm = (id) => {
             con.query(properties.get('getForm'), [id], function(err,rows){
                 if (err)
                     rej(err);
-                res(rows)
+                res(rows[0])
                 con.release()
             }
         )})

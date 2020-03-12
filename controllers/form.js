@@ -12,6 +12,17 @@ router.get('/', middleware.isLoggedIn, function(req,res) {
     }).catch((err) => res.send(err))
 })
 
+router.get('/:form/form', middleware.isLoggedIn, function(req,res) {
+    form.getForm(req.params.form).then((results) => {
+        res.send({
+            data: {
+                form: results
+            }
+        })
+    }).catch((err) => res.send(err))
+})
+
+
 router.get('/:form', middleware.isLoggedIn, function(req,res) {
     input.getInputByForm(req.params.form).then((results) => {
         res.send(results)
