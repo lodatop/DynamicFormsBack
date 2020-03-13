@@ -34,7 +34,7 @@ router.post('/registerAdmin', function(req, res, next) {
   });
 
 router.post('/login', passport.authenticate('local-signin'), function(req, res, next) {
-  if(typeof req.user !== undefined){
+  if(req.user){
     res.send({
       status: 200,
       message: "login succesfully",
