@@ -45,7 +45,7 @@ app.use(cors({
 }));
 
 app.use('/', indexRouter);
-app.use('/', inputRouter);
+app.use('/input', inputRouter);
 app.use('/user', userRouter);
 app.use('/profile', profileRouter);
 app.use('/menu', menuRouter);

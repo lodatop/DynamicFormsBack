@@ -1,39 +1,52 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var user = require('../helpers/user');
+var userHelper = require('../helpers/user');
 
 const middleware = require('../middlewares/auth');
 
 
-router.use('/', middleware.isNotLoggedIn, function(req, res, next) {
-  next();
-})
-
-
-router.post('/register', function(req, res, next) {
-  var us = user.registerUser(req.body.name, req.body.username, req.body.email, req.body.password, req.body.age, req.body.gender).then((rows) => {
+router.post('/register', middleware.isNotLoggedIn, function(req, res, next) {
+  const { name, username, email, password, age, gender } = req.body;
+  userHelper.registerUser(name, username, email, password, age, gender).then((rows) => {
     if (rows) {
       res.send({
         status: 200,
         message: "registered succesfully as user",
-        user: rows})
+        data: {
+          user: rows
+        }})
     }
-  }).catch((err) => console.log(err))
+  }).catch((err) => {
+    res.send({
+      status: 401,
+      message: "Register failed.",
+      data: {
+        error: err
+      }})
+  })
 });
 
-router.post('/registerAdmin', function(req, res, next) {
-    var us = user.registerAdmin(req.body.name, req.body.username, req.body.email, req.body.password, req.body.age, req.body.gender).then((rows) => {
-      if (rows) {
-        res.send({
-          status: 200,
-          message: "registered succesfully as admin",
-          user: rows})
+router.post('/registerAdmin', middleware.isAdmin, function(req, res, next) {
+  const { name, username, email, password, age, gender } = req.body;  
+  userHelper.registerAdmin(name, username, email, password, age, gender).then((rows) => {
+    if (rows) {
+      res.send({
+        status: 200,
+        message: "registered succesfully as admin",
+        user: rows})
       }
-    }).catch((err) => console.log(err))
-  });
+  }).catch((err) => {
+    res.send({
+      status: 401,
+      message: "Register failed.",
+      data: {
+        error: err
+      }})
+  })
+});
 
-router.post('/login', passport.authenticate('local-signin'), function(req, res, next) {
+router.post('/login', middleware.isNotLoggedIn, passport.authenticate('local-signin'), function(req, res, next) {
   if(req.user){
     res.send({
       status: 200,

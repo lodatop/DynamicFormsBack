@@ -25,7 +25,8 @@ module.exports = {
           return next();
         } else {
           res.send({
-            status: 403
+            status: 403,
+            message: 'permissions denied'
           });
         }
       } else {

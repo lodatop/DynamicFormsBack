@@ -1,17 +1,18 @@
 var express = require('express');
 var router = express.Router();
-var input = require('./../helpers/input');
+var inputHelper = require('./../helpers/input');
 
 const middleware = require('../middlewares/auth');
 
-router.get('/input', function(req,res) {
-    input.getAllInputs().then((results) => {
+router.get('/', function(req,res) {
+    inputHelper.getAllInputs().then((results) => {
         res.send(results)
     }).catch((err) => res.send(err))
 })
 
-router.post('/input', middleware.isAdmin, function(req,res) {
-    input.insertInput(req.body.label, req.body.type).then((results) => {
+router.post('/', middleware.isAdmin, function(req,res) {
+    const { label, type } = req.body;
+    inputHelper.insertInput(label, type).then((results) => {
         res.send(results)
     }).catch((err) => res.send(err))
 })
