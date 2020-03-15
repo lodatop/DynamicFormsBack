@@ -23,7 +23,7 @@ router.get('/:form', middleware.isLoggedIn, function(req,res) {
     }).catch((err) => res.send(err))
 })
 
-router.delete('/:form/delete', function(req,res) {
+router.delete('/:form', function(req,res) {
     const { form } = req.params;
     formHelper.deleteForm(form).then((results) => {
         res.send(results)
@@ -68,7 +68,7 @@ router.post('/:form/answer', middleware.isLoggedIn, function(req,res) {
     })
 })
 
-router.delete('/:form/answer/delete', function(req,res) {
+router.delete('/:form/answer', function(req,res) {
     const { form } = req.params;
     const { id_user } = req.user;
     answerHelper.deleteUserForm(form, id_user).then((results)=>{
@@ -77,14 +77,5 @@ router.delete('/:form/answer/delete', function(req,res) {
         res.send(err)
     })
 })
-
-router.post('/:form/input/delete', function(req,res) {
-    const { form } = req.params;
-    const { input } = req.body;
-    inputHelper.deleteFormInput(form, input).then((results) => {
-        res.send(results)
-    }).catch((err) => res.send(err))
-})
-
 
 module.exports = router;

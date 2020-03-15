@@ -33,7 +33,7 @@ router.get('/:menu', async function(req,res) {
 })
 
 
-router.delete('/:menu/delete', middleware.isAdmin, function(req,res){
+router.delete('/:menu', middleware.isAdmin, function(req,res){
     const { menu } = req.params;
     menuHelper.deleteMenu(menu).then((results) => {
         res.send(results)

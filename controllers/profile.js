@@ -15,7 +15,7 @@ router.get('/', middleware.isLoggedIn, function(req,res) {
   })
 })
 
-router.put('/update', middleware.isLoggedIn, function(req, res, next) {
+router.put('/', middleware.isLoggedIn, function(req, res, next) {
   const {username, name, email, age, gender} = req.body;
   const { id_user } = req.user;
   userHelper.updateUser(username, name, email, age, gender, id_user).then((rows) => {
